@@ -60,7 +60,7 @@ function Note({ note, setNotes, setCurrentNoteId }) {
                 Cancel
               </button>
               <button
-                onClick={handleSave}
+                onClick={(title || tempTitle) ? handleSave : ""}
                 className='ml-1 bg-green-500 hover:bg-green-700 rounded-full text-white font-bold py-2 px-4'
               >
                 Save
@@ -69,7 +69,7 @@ function Note({ note, setNotes, setCurrentNoteId }) {
           )}
         </div>
       </div>
-      <div className='h-full'>
+      <div className='h-4/5'>
         {!editMode ? (
           <>
             <h1 className='text-2xl font-bold mb-2'>{note.title}</h1>
