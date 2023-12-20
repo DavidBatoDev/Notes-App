@@ -10,7 +10,7 @@ function NotesView({notes, setCurrentNoteId, addNote, handleToggleDeleteProp, de
     <div className='flex w-full h-full bg-secondary p-5'>
       <div 
         className='w-full grid grid-cols-2 gap-4 p-10
-        lg:grid-cols-4 lg:gap-5 lg-pt-5
+        lg:grid-cols-4 lg:gap-5 lg:pt-5
         '
         
         >
@@ -25,7 +25,7 @@ function NotesView({notes, setCurrentNoteId, addNote, handleToggleDeleteProp, de
             }
             <div className='flex flex-col justify-between items-start'>
               <h1 className='text-white text-md font-semibold'>{note.title}</h1>
-              <p className='text-white overflow-hidden mt-4 text-xs hidden lg:block'>{note.content}</p>
+              <p className='text-white overflow-hidden mt-4 text-xs'>{note.content}</p>
             </div>
           </div>
           </>

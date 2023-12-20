@@ -2,7 +2,8 @@ import React from 'react'
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete'
+import { Link } from 'react-router-dom';
 
 function Sidebar({addNote}) {
   return (
@@ -27,14 +28,30 @@ function Sidebar({addNote}) {
             >New Note</button>
         </div>
         <div className='mt-3 flex flex-col pl-4'>
-            <div className='hover:opacity-70 text-white h-10 font-normal  flex items-center cursor-pointer'>
-                <EditNoteIcon className='mr-2'/>
-                Notes
-            </div>
-            <div className='hover:opacity-70 text-white h-10 font-normal flex items-center cursor-pointer'>
-            <EditNoteIcon className='mr-2'/>
-                Todo List
-            </div>
+            <Link to="/notes">
+                <div className='hover:opacity-70 text-white h-10 font-normal  flex items-center cursor-pointer'>
+                    <EditNoteIcon className='mr-2'/>
+                    Notes
+                </div>
+            </Link>
+            <Link to='/todolist'>
+                <div className='hover:opacity-70 text-white h-10 font-normal flex items-center cursor-pointer'>
+                    <EditNoteIcon className='mr-2'/>
+                    Todo List
+                </div>
+            </Link>
+            <Link>
+                <div className='hover:opacity-70 text-white h-10 font-normal flex items-center cursor-pointer'>
+                    <EditNoteIcon className='mr-2'/>
+                    Sketch
+                </div>
+            </Link>
+            <Link>
+                <div className='hover:opacity-70 text-white h-10 font-normal flex items-center cursor-pointer'>
+                    <EditNoteIcon className='mr-2'/>
+                    Record
+                </div>
+            </Link>
             <div className='mt-10 text-white h-9 font-semibold flex items-center cursor-pointer'>
                 <DeleteIcon />
                 Trash
