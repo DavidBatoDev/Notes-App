@@ -6,6 +6,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom'
+import SoundRecord from './components/SoundRecord.jsx';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
             <Route path='/notes' element={<Notes />} />
             <Route path='/todolist' element={<TodoList />} />
             <Route path='/sketch' element={<Notes />} />
-            <Route path='/record' element={<Notes />} />
+            <Route path='/record' element={<SoundRecord />} />
           </Routes>
         </Router>
       </div>

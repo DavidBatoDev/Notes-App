@@ -46,7 +46,7 @@ function Sidebar({addNote}) {
                     Sketch
                 </div>
             </Link>
-            <Link>
+            <Link to='/record'>
                 <div className='hover:opacity-70 text-white h-10 font-normal flex items-center cursor-pointer'>
                     <EditNoteIcon className='mr-2'/>
                     Record
