@@ -40,7 +40,7 @@ function Sidebar({addNote}) {
                     Todo List
                 </div>
             </Link>
-            <Link>
+            <Link to="/sketch">
                 <div className='hover:opacity-70 text-white h-10 font-normal flex items-center cursor-pointer'>
                     <EditNoteIcon className='mr-2'/>
                     Sketch
