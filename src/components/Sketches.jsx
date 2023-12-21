@@ -17,9 +17,14 @@ function Sketches() {
             id,
             title,
             dataSrc,
+            dataPath,
         }
         setCurrentSketchId(newSketch.id)
         setSketches([newSketch, ...sketches])
+    }
+
+    const deleteSketch = (id) => {
+        setSketches(sketches.filter(sketch => sketch.id !== id))
     }
 
     return (
@@ -35,6 +40,7 @@ function Sketches() {
                 sketches={sketches}
                 setCurrentSketchId={setCurrentSketchId}
                 addSketch={addSketch}
+                deleteSketch={deleteSketch}
             />
     )
 }

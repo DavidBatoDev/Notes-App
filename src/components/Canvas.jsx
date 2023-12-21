@@ -9,22 +9,28 @@ function Canvas({sketches, id, addSketch, setSketches, setCurrentSketchId}) {
     const [eraserWidth, setEraserWidth] = useState(10);
     const [title, setTitle] = useState('');
     const [dataSrc, setDataSrc] = useState(null);
+    const [dataPath, setDataPath] = useState([]);
+
+    const canvasRef = useRef(null);
 
     useEffect(() => {
         const sketch = sketches.find(sketch => sketch.id === id)
         if (!sketch) {
-            addSketch(id, "Untitled", dataSrc,)
+            addSketch(id, "Untitled", dataSrc, dataPath)
+        } else {
+            handleLoadPaths(sketch.dataPath)
         }
-
-        // else continue the sketch progress
     }, [])
 
-    const canvasRef = useRef(null);
-
-    async function handleExportImage () {
-        const dataUrl = await canvasRef.current.exportImage("png");
-        setDataSrc(dataUrl);
-        setSketches(prevSketches => prevSketches.map(sketch => sketch.id === id ? {...sketch, dataSrc: dataUrl} : sketch))
+    async function handleSave () {
+        try {
+            const dataUrl = await canvasRef.current.exportImage("png");
+            setDataSrc(dataUrl);
+            const paths = await handleExportPaths();
+            setSketches(prevSketches => prevSketches.map(sketch => sketch.id === id ? {...sketch, title: title, dataSrc: dataUrl, dataPath: paths} : sketch))
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleClearCanvas = () => {
@@ -44,17 +50,36 @@ function Canvas({sketches, id, addSketch, setSketches, setCurrentSketchId}) {
         canvasRef.current.eraseMode(!isEraseMode);
     };
 
-    const handleExportSvg = () => {
-        canvasRef.current.exportSvg().then(svg => {
-            console.log(svg);
-        });
-    };
+    async function handleExportPaths() {
+        try {
+            const paths = await canvasRef.current.exportPaths();
+            setDataPath(paths);
+            return paths;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handleLoadPaths() {
+        const sketch = sketches.find(sketch => sketch.id === id);
+        if (sketch) {
+            try {
+                await canvasRef.current.loadPaths(sketch.dataPath);
+                setTitle(sketch.title);
+                setDataPath(sketch.dataPath);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }    
 
     return (
         <div className='bg-white h-full w-full flex flex-col'>
-            <div className="flex w-full justify-between">
+            <div className="flex w-full">
                 <ArrowBackIcon onClick={() => setCurrentSketchId(null)} className='cursor-pointer text-black' />
-                <button className='mb-2' onClick={handleExportImage}>Save</button>
+            </div>
+            <div className='flex'>
+                <button className='mb-2' onClick={handleSave}>Save</button>
             </div>
             <div className='ml-5 flex mt-2 w-full h-full'>
                 <div className='w-full h-full flex flex-col justify-start items-start'>
@@ -70,7 +95,6 @@ function Canvas({sketches, id, addSketch, setSketches, setCurrentSketchId}) {
                     style={{
                         border: "0.0625rem solid #9c9c9c",
                         borderRadius: "0.25rem",
-                        backgroundColor: "url('https://upload.wikimedia.org/wikipedia/commons/7/70/Graph_paper_scan_1600x1000_%286509259561%29.jpg')",
                     }}
                     width="100%"
                     height="80%"
@@ -85,7 +109,6 @@ function Canvas({sketches, id, addSketch, setSketches, setCurrentSketchId}) {
                     <button className='mb-2' onClick={handleUndo}>Undo</button>
                     <button className='mb-2' onClick={handleRedo}>Redo</button>
                     <button className='mb-2' onClick={handleClearCanvas}>Clear All</button>
-                    <button className='mb-2' onClick={handleExportSvg}>Export SVG</button>
                     <button className={`mb-2 ${isEraseMode ? 'bg-red-500 text-white' : 'bg-gray-300'}`} onClick={handleEraseMode}>Erase</button>
                     <div className='items-center flex mb-2'>
                         <label>Color</label>
