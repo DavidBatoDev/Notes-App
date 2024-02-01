@@ -6,7 +6,7 @@ This app is a 4in1 crud notes application, where user can take:
 3. Sketch (create, update, save, and delete sketches)
 4. Sound (record, save and delete sounds recorded. Future features might include the use of firebase storage to convert blob link to a actual link)
 
-Some notable features will include:
+Some notable future features will include:
 Firebase authentication
 Firebase Database
 Firebase Storage
